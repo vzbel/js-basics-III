@@ -161,12 +161,14 @@ class Calculator {
   #operatorButtonClass = ".operator-button"; // The class which denotes an operator button.
 
   // Calculator properties
-  #operandQueue; // Queue holding operands to be calculated.
+  #operandQueue; // Queue holds the operands to be calculated.
+  #operationQueue; // Queue holds the operations to be completed.
   #calculatorDisplay = "0"; // @ Current display of the calculator.
   #lastButtonPressed; // The previous button press.
 
   constructor() {
     this.#operandQueue = new Queue();
+    this.#operationQueue = new Queue();
     this.initializeEventListeners();
   }
 
@@ -199,7 +201,7 @@ class Calculator {
       } else if (dataAction === "decimal") {
         this.pressDecimalButton(); // @ Append a decimal to the display.
       } else if (this.isOperator(buttonElement)) {
-        this.pressOperatorButton();
+        this.pressOperatorButton(dataAction); // Press the operator button, giving the dataAction to determine operation type.
       }
 
       // In all cases, assign the pressed button as the last button press.
@@ -207,8 +209,8 @@ class Calculator {
     }
   }
 
-  // Processes an operator button press.
-  pressOperatorButton() {
+  // Processes an operator button press. Provide a dataAction parameter to determine the operation type.
+  pressOperatorButton(dataAction) {
     // If the last button pressed was an operator, we will NOT add the current value to the operand queue.
     if (this.isOperator(this.#lastButtonPressed)) {
       console.log(
@@ -224,9 +226,12 @@ class Calculator {
     // Then a calculated result is expected by the operator button press.
     // We will call a function made specifically for calculating results.
     if (this.#operandQueue.length() >= 2) {
-      console.log(this.#operandQueue.contents());
+      this.#operationQueue.enqueue(dataAction); // Add current operation to the operator queue
     }
   }
+
+  // Calculate the result of the current operation. dataAction is used to determine the operation type.
+  // calculateResult(dataAction) {}
 
   // @ Processes a digit button press.
   pressDigitButton(buttonTextContent) {
