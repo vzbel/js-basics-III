@@ -217,6 +217,13 @@ class Calculator {
     } else {
       // We want to add the element currently on the display to the operand queue.
       this.#operandQueue.enqueue(Number(this.#calculatorDisplay));
+    }
+
+    // If after adding an element to the operand queue,
+    // the queue contains two or more values,
+    // Then a calculated result is expected by the operator button press.
+    // We will call a function made specifically for calculating results.
+    if (this.#operandQueue.length() >= 2) {
       console.log(this.#operandQueue.contents());
     }
   }
