@@ -163,6 +163,7 @@ class Calculator {
   // Calculator properties
   #operandQueue; // Queue holding operands to be calculated.
   #calculatorDisplay = "0"; // @ Current display of the calculator.
+  #lastButtonPressed; // The previous button press.
 
   constructor() {
     this.#operandQueue = new Queue();
@@ -198,16 +199,36 @@ class Calculator {
       } else if (dataAction === "decimal") {
         this.pressDecimalButton(); // @ Append a decimal to the display.
       } else if (this.isOperator(buttonElement)) {
-        // We want to add the element currently on the display to the operand queue.
-        // this.#operandQueue.enqueue(Number(this.#calculatorDisplay));
+        this.pressOperatorButton();
       }
+
+      // In all cases, assign the pressed button as the last button press.
+      this.#lastButtonPressed = buttonElement;
+    }
+  }
+
+  // Processes an operator button press.
+  pressOperatorButton() {
+    // If the last button pressed was an operator, we will NOT add the current value to the operand queue.
+    if (this.isOperator(this.#lastButtonPressed)) {
+      console.log(
+        "The last button press was an operator. No need to add the display to the queue again."
+      );
+    } else {
+      // We want to add the element currently on the display to the operand queue.
+      this.#operandQueue.enqueue(Number(this.#calculatorDisplay));
+      console.log(this.#operandQueue.contents());
     }
   }
 
   // @ Processes a digit button press.
   pressDigitButton(buttonTextContent) {
-    // If the calculator display is zero, the digit must replace the current display.
-    if (this.#calculatorDisplay === "0") {
+    // If the calculator display is zero or the last button was
+    // an operator, the newly pressed digit must replace the current display.
+    if (
+      this.#calculatorDisplay === "0" ||
+      this.isOperator(this.#lastButtonPressed)
+    ) {
       this.updateDisplay(buttonTextContent);
     } else {
       // Otherwise, append the digit to the current display.
