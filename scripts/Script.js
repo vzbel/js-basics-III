@@ -155,7 +155,6 @@ class Calculator {
   // Working: Pressing digits and the decimal button updates the display properly. Basic calculations achieved using operators, including operation switching
   // WIP:
   // Fix accuracy of calculations involving floating-point numbers.
-  // Complete the equals button functionality.
 
   // HTML properties (Classes, elements, etc).
   #displayElement = document.querySelector(".output"); // This variable holds the display HTML element.
@@ -199,7 +198,7 @@ class Calculator {
       } else if (dataAction === "clear") {
         this.pressClearButton(); // @ Reinitialize the calculator display and queues.
       } else if (dataAction === "calculate") {
-        // console.log(dataAction);
+        this.pressEqualsButton(); // Process calculation
       } else if (dataAction === "decimal") {
         this.pressDecimalButton(); // @ Append a decimal to the display.
       } else if (this.isOperator(buttonElement)) {
@@ -238,6 +237,18 @@ class Calculator {
       this.updateDisplay(result); // Update the display with the result.
       this.#operandQueue.enqueue(result); // Add the result to the operand queue.
     }
+  }
+
+  // Process a press of the equals button
+  pressEqualsButton() {
+    // Add current value to the operand queue.
+    this.#operandQueue.enqueue(Number(this.#calculatorDisplay));
+    // Calculate the result of the first pending operation in the queue.
+    const result = this.calculateResult(this.#operationQueue.dequeue());
+    // Update display
+    this.updateDisplay(result);
+    // Clear queues
+    this.clearQueues();
   }
 
   // Calculate and return the result of the current operation. dataAction is used to determine the operation type.
