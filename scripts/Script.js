@@ -151,9 +151,11 @@ class Queue {
 class Calculator {
   // Legend:
   // @ denotes a method or line of code with a rigid structure that should remain largely unchanged.
-  // Itinerary:
-  // Working: Pressing digits and the decimal button updates the display properly.
-  // WIP: Make sure that the reset button clears any queues.
+  // Itinerary for our caluclator coding journey:
+  // Working: Pressing digits and the decimal button updates the display properly. Basic calculations achieved using operators, including operation switching
+  // WIP:
+  // Fix accuracy of calculations involving floating-point numbers.
+  // Complete the equals button functionality.
 
   // HTML properties (Classes, elements, etc).
   #displayElement = document.querySelector(".output"); // This variable holds the display HTML element.
@@ -216,7 +218,7 @@ class Calculator {
       this.#operandQueue.enqueue(Number(this.#calculatorDisplay)); // We want to add the element currently on the display to the operand queue.
       this.#operationQueue.enqueue(dataAction); // Add current operation to the operation queue
     }
-    // Else if the user is the last button pressed was an operator and the user is switching operations,
+    // Else if the last button pressed was an operator and the user is switching operations,
     // (we recognize this by the current button being different from the last enqueued operation)
     // Then we will dequeue the last operation, and enqueue the current operation.
     else if (
