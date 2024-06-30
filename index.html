@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>NI-74 Calculator</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="button-grid-row">
+        <h1>NI-74</h1>
+      </div>
+      <div class="button-grid-row output-container">
+        <h2 class="output">0</h2>
+      </div>
+      <div class="button-grid">
+        <div class="button-grid-row">
+          <button class="digit-button">7</button>
+          <button class="digit-button">8</button>
+          <button class="digit-button">9</button>
+          <button data-action="multiply" class="operator-button">
+            &times;
+          </button>
+        </div>
+        <div class="button-grid-row">
+          <button class="digit-button">4</button>
+          <button class="digit-button">5</button>
+          <button class="digit-button">6</button>
+          <button data-action="subtract" class="operator-button">-</button>
+        </div>
+        <div class="button-grid-row">
+          <button class="digit-button">1</button>
+          <button class="digit-button">2</button>
+          <button class="digit-button">3</button>
+          <button data-action="add" class="operator-button">+</button>
+        </div>
+        <div class="button-grid-row">
+          <button class="digit-button">0</button>
+          <button data-action="decimal" class="decimal-button">.</button>
+          <button data-action="calculate" class="equals-button">=</button>
+          <button data-action="divide" class="operator-button">&divide;</button>
+        </div>
+        <div class="button-grid-row">
+          <button data-action="clear" class="reset-button">C</button>
+        </div>
+      </div>
+    </div>
+    <script src="./scripts/Script.js"></script>
+  </body>
+</html>

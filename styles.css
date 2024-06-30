@@ -1,0 +1,96 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(244, 241, 236);
+    color: white;
+}
+
+.main{
+    margin: 0 auto;
+    padding: 13px;
+    width: 450px;
+    text-align: center;
+    outline: 1px solid rgb(29, 28, 28);
+    border-radius: 20px;
+    box-shadow: rgb(117, 115, 115) -10px 10px;
+    background-color: rgb(139, 137, 137);
+}
+
+.main h1{
+    background-color: rgb(47, 49, 52);
+    font-size: 20px;
+    height: 40px;
+}
+
+#output{
+    font-size: 3rem;
+    min-height: 80px;
+}
+
+.button-grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* background-color: greenyellow; */
+    padding: 5px 18px;
+}
+
+.button-grid-row{
+    width: 100%;
+    /* background-color: green; */
+    display: flex;
+    padding: 10px 0px;
+    gap: .7rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.output-container{
+    width: 100%;
+    border-radius: 10px;
+}
+
+.button-grid button, .output, .main h1{
+    box-shadow: rgb(69, 69, 69) -2px 5px;
+    color: rgb(252, 246, 246);
+    border-radius: 20px;
+    border-style: none;
+    width: 100px;
+    flex-grow: 1;
+    padding: 10px 20px;
+    transition: 1s ease-in-out;
+}
+
+.digit-button:hover, .operator-button:hover, #button-C:hover, .decimal-button:hover, .equals-button:hover, .reset-button:hover{
+    background-color: rgb(175, 159, 159);
+    color: rgb(236, 230, 230);
+    cursor: pointer;
+}
+
+.button-grid button, .output{
+font-size: 50px;
+}
+/* change color of digit buttons here */
+.digit-button, .decimal-button{
+    background-color: rgb(69, 71, 74);
+}
+/* change color of operator buttons here */
+.operator, #button-C, .equals-button, .reset-button, .operator-button{
+    background-color: rgb(84, 80, 75);
+}
+
+/* change color of output here */
+.output{ 
+    background: rgb(78, 82, 78);
+    box-shadow: rgb(211, 208, 208) -2px 5px;
+}
