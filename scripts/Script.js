@@ -195,7 +195,7 @@ class Calculator {
       if (!dataAction) {
         this.pressDigitButton(buttonTextContent); // @ Process the digit button, passing in the digit string as a parameter.
       } else if (dataAction === "clear") {
-        this.pressClearButton(); // @ Reinitialize the display.
+        this.pressClearButton(); // @ Reinitialize the calculator display and queues.
       } else if (dataAction === "calculate") {
         // console.log(dataAction);
       } else if (dataAction === "decimal") {
@@ -274,6 +274,8 @@ class Calculator {
 
   // @ Processes a clear/reset button press.
   pressClearButton() {
+    this.#operandQueue.clear(); // Clear operands
+    this.#operationQueue.clear(); // Clear operations
     this.updateDisplay("0"); // Set display to zero.
   }
 
