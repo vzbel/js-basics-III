@@ -211,11 +211,20 @@ class Calculator {
 
   // Processes an operator button press. Provide a dataAction parameter to determine the operation type.
   pressOperatorButton(dataAction) {
-    // If the last button pressed was an operator, we will NOT add the current value to the operand queue.
-    if (this.isOperator(this.#lastButtonPressed)) {
-    } else {
+    // If the last button pressed is not an operator, we will add the current value to the operand queue.
+    if (!this.isOperator(this.#lastButtonPressed)) {
       this.#operandQueue.enqueue(Number(this.#calculatorDisplay)); // We want to add the element currently on the display to the operand queue.
       this.#operationQueue.enqueue(dataAction); // Add current operation to the operation queue
+    }
+    // Else if the user is the last button pressed was an operator and the user is switching operations,
+    // (we recognize this by the current button being different from the last enqueued operation)
+    // Then we will dequeue the last operation, and enqueue the current operation.
+    else if (
+      this.isOperator(this.#lastButtonPressed) &&
+      dataAction !== this.#operationQueue.peek()
+    ) {
+      this.#operationQueue.dequeue(); // Dequeue last operation
+      this.#operationQueue.enqueue(dataAction); // Enqueue the new data action we are switching to.
     }
 
     // If after adding an element to the operand queue,
@@ -279,6 +288,12 @@ class Calculator {
     this.updateDisplay("0"); // Set display to zero.
   }
 
+  // Clears the operation and operand queues
+  clearQueues() {
+    this.#operandQueue.clear(); // initialize operands
+    this.#operationQueue.clear(); // initialize operators
+  }
+
   // @ Processes a decimal button press.
   pressDecimalButton() {
     // Proceed only if the display does not already contain a decimal.
@@ -289,6 +304,10 @@ class Calculator {
 
   // @ Checks if a button is an operator button by checking its class.
   isOperator(element) {
+    // if the element is not assigned, return false.
+    if (element === undefined) {
+      return false;
+    }
     // First ensure that the parameter passed in is a button
     if (this.isButton(element)) {
       // Then check if it has the operator-button class.
@@ -298,6 +317,10 @@ class Calculator {
 
   // @ Checks if a button is a button.
   isButton(element) {
+    // if the element is not assigned, return false.
+    if (element === undefined) {
+      return false;
+    }
     return element.matches("button");
   }
 
