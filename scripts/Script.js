@@ -161,8 +161,8 @@ class Calculator {
   #operatorButtonClass = ".operator-button"; // The class which denotes an operator button.
 
   // Calculator properties
-  #operandQueue; // Queue holds the operands to be calculated.
-  #operationQueue; // Queue holds the operations to be completed.
+  #operandQueue; // Queue holds the operands to be calculated. First operand in, first operand out.
+  #operationQueue; // Queue holds the operations to be completed. First operation in, first operation out.
   #calculatorDisplay = "0"; // @ Current display of the calculator.
   #lastButtonPressed; // The previous button press.
 
@@ -213,12 +213,9 @@ class Calculator {
   pressOperatorButton(dataAction) {
     // If the last button pressed was an operator, we will NOT add the current value to the operand queue.
     if (this.isOperator(this.#lastButtonPressed)) {
-      console.log(
-        "The last button press was an operator. No need to add the display to the queue again."
-      );
     } else {
-      // We want to add the element currently on the display to the operand queue.
-      this.#operandQueue.enqueue(Number(this.#calculatorDisplay));
+      this.#operandQueue.enqueue(Number(this.#calculatorDisplay)); // We want to add the element currently on the display to the operand queue.
+      this.#operationQueue.enqueue(dataAction); // Add current operation to the operation queue
     }
 
     // If after adding an element to the operand queue,
@@ -226,12 +223,39 @@ class Calculator {
     // Then a calculated result is expected by the operator button press.
     // We will call a function made specifically for calculating results.
     if (this.#operandQueue.length() >= 2) {
-      this.#operationQueue.enqueue(dataAction); // Add current operation to the operator queue
+      const result = this.calculateResult(this.#operationQueue.dequeue()); // Calculate the result of the first pending operation in the queue.
+      this.updateDisplay(result); // Update the display with the result.
+      this.#operandQueue.enqueue(result); // Add the result to the operand queue.
     }
   }
 
-  // Calculate the result of the current operation. dataAction is used to determine the operation type.
-  // calculateResult(dataAction) {}
+  // Calculate and return the result of the current operation. dataAction is used to determine the operation type.
+  calculateResult(dataAction) {
+    // Variable will store the result of the calculation.
+    let result = this.#operandQueue.dequeue(); // Start from the first element in the operand queue.
+
+    // While the queue is not empty
+    while (!this.#operandQueue.isEmpty()) {
+      // Determine what operation to complete on the value by the dataAction.
+      // As this method is called with only one dataAction parameter, only one operation will be called each loop iteration.
+      switch (dataAction) {
+        case "multiply":
+          result *= this.#operandQueue.dequeue();
+          break;
+        case "divide":
+          result /= this.#operandQueue.dequeue();
+          break;
+        case "add":
+          result += this.#operandQueue.dequeue();
+          break;
+        case "subtract":
+          result -= this.#operandQueue.dequeue();
+          break;
+      }
+    }
+    // Return the final calculation result.
+    return result;
+  }
 
   // @ Processes a digit button press.
   pressDigitButton(buttonTextContent) {
