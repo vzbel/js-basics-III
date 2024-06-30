@@ -224,7 +224,7 @@ class Calculator {
       this.isOperator(this.#lastButtonPressed) &&
       dataAction !== this.#operationQueue.peek()
     ) {
-      this.#operationQueue.dequeue(); // Dequeue last operation
+      this.#operationQueue.dequeue(); // Dequeue previous operation
       this.#operationQueue.enqueue(dataAction); // Enqueue the new data action we are switching to.
     }
 
@@ -265,6 +265,11 @@ class Calculator {
           result *= this.#operandQueue.dequeue();
           break;
         case "divide":
+          // Avoid division by zero, just to ensure a NaN result and not Infinity
+          // Though the code will not break if this is not implemented, it would be safer to implement this anyway.
+          if (this.#operandQueue.peek() === 0) {
+            return NaN;
+          }
           result /= this.#operandQueue.dequeue();
           break;
         case "add":
