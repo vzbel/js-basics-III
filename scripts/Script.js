@@ -315,15 +315,22 @@ class Calculator {
 
   // @ Processes a decimal button press.
   pressDecimalButton() {
-    // Proceed only if the display does not already contain a decimal.
+    // Append a decimal only if the display does not already contain a decimal.
     if (!this.#calculatorDisplay.includes(".")) {
       this.updateDisplay(this.#calculatorDisplay + "."); // Append a decimal to the current display.
+    } else if (
+      this.#calculatorDisplay.includes(".") &&
+      this.isOperator(this.#lastButtonPressed)
+    ) {
+      // Now if the calculator includes a decimal and the last button pressed was an operator,
+      // Replace the display.
+      this.updateDisplay("0.");
     }
   }
 
   // @ Checks if a button is an operator button by checking its class.
   isOperator(element) {
-    // if the element is not assigned, return false.
+    // If the element is not assigned, return false.
     if (element === undefined) {
       return false;
     }
