@@ -247,6 +247,7 @@ class Calculator {
     const result = this.calculateResult(this.#operationQueue.dequeue());
     // Update display
     this.updateDisplay(result);
+    console.log(this.#calculatorDisplay);
     // Clear queues
     this.clearQueues();
   }
@@ -344,8 +345,8 @@ class Calculator {
 
   // @ Update the display with a new string.
   updateDisplay(newDisplay) {
-    this.#displayElement.textContent = newDisplay; // Update display on the UI
-    this.#calculatorDisplay = newDisplay; // Update the variable holding the display
+    this.#displayElement.textContent = String(newDisplay); // Update display on the UI
+    this.#calculatorDisplay = String(newDisplay); // Update the variable holding the display
   }
 }
 
